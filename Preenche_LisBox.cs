@@ -11,7 +11,7 @@ namespace ER_V1
             _pesquisaList.Items.Clear();
             if (Db.sqlConnection.State == System.Data.ConnectionState.Closed) Db.sqlConnection.Open();
             SqlCommand sqlCommand = new SqlCommand(_pesquisaCount, Db.sqlConnection);
-            System.Data.SqlClient.SqlDataReader sqlDataReader = sqlCommand.ExecuteReader(System.Data.CommandBehavior.SingleResult);
+            System.Data.SqlClient.SqlDataReader sqlDataReader = sqlCommand.ExecuteReader(SingleResult);
 
             float r = 0;
             if (sqlDataReader.HasRows)
@@ -19,6 +19,7 @@ namespace ER_V1
                 sqlDataReader.Read();
                 r = int.Parse(sqlDataReader[0].ToString()) > 0 ? Convert.ToSingle(String.Format("{0:n2}", 100 / Convert.ToSingle(sqlDataReader[0]))) : 0;
             }
+
             sqlCommand.Dispose();
             sqlDataReader.Close();
 
